@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema(
   {
-    image: String,
+    images: [String], // Array of image URLs
+    mainImage: String, // Main product image
     title: String,
     description: String,
     category: String,
@@ -11,6 +12,21 @@ const ProductSchema = new mongoose.Schema(
     salePrice: Number,
     totalStock: Number,
     averageReview: Number,
+    specifications: {
+      type: Map,
+      of: String
+    },
+    features: [String],
+    dimensions: {
+      length: Number,
+      width: Number,
+      height: Number,
+      unit: String
+    },
+    weight: {
+      value: Number,
+      unit: String
+    }
   },
   { timestamps: true }
 );

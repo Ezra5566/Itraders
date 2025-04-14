@@ -99,6 +99,83 @@ export const addProductFormElements = [
     type: "number",
     placeholder: "Enter total stock",
   },
+  {
+    label: "Features",
+    name: "features",
+    componentType: "textarea",
+    placeholder: "Enter product features (one per line)",
+    helperText: "Each line will be treated as a separate feature",
+  },
+  {
+    label: "Dimensions",
+    name: "dimensions",
+    componentType: "group",
+    fields: [
+      {
+        label: "Length",
+        name: "length",
+        componentType: "input",
+        type: "number",
+        placeholder: "Enter length",
+      },
+      {
+        label: "Width",
+        name: "width",
+        componentType: "input",
+        type: "number",
+        placeholder: "Enter width",
+      },
+      {
+        label: "Height",
+        name: "height",
+        componentType: "input",
+        type: "number",
+        placeholder: "Enter height",
+      },
+      {
+        label: "Unit",
+        name: "unit",
+        componentType: "select",
+        options: [
+          { id: "cm", label: "Centimeters" },
+          { id: "inch", label: "Inches" },
+          { id: "mm", label: "Millimeters" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Weight",
+    name: "weight",
+    componentType: "group",
+    fields: [
+      {
+        label: "Value",
+        name: "value",
+        componentType: "input",
+        type: "number",
+        placeholder: "Enter weight value",
+      },
+      {
+        label: "Unit",
+        name: "unit",
+        componentType: "select",
+        options: [
+          { id: "kg", label: "Kilograms" },
+          { id: "g", label: "Grams" },
+          { id: "lb", label: "Pounds" },
+          { id: "oz", label: "Ounces" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Specifications",
+    name: "specifications",
+    componentType: "keyValue",
+    placeholder: "Enter product specifications",
+    helperText: "Add key-value pairs for product specifications",
+  },
 ];
 
 export const shoppingViewHeaderMenuItems = [
