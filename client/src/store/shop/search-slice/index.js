@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Backend base URL from env
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const initialState = {
   isLoading: false,
   searchResults: [],
@@ -9,10 +12,7 @@ const initialState = {
 export const getSearchResults = createAsyncThunk(
   "/order/getSearchResults",
   async (keyword) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/shop/search/${keyword}`
-    );
-
+    const response = await axios.get(`${API_BASE}/api/shop/search/${keyword}`);
     return response.data;
   }
 );
@@ -44,3 +44,4 @@ const searchSlice = createSlice({
 export const { resetSearchResults } = searchSlice.actions;
 
 export default searchSlice.reducer;
+
