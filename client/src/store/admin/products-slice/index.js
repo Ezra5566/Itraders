@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Dynamically set the API base URL based on environment
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const initialState = {
   isLoading: false,
   productList: [],
@@ -10,7 +13,7 @@ export const addNewProduct = createAsyncThunk(
   "/products/addnewproduct",
   async (formData) => {
     const result = await axios.post(
-      "http://localhost:5000/api/admin/products/add",
+      `${API_BASE}/api/admin/products/add`,  // Using the dynamic backend URL
       formData,
       {
         headers: {
@@ -27,7 +30,7 @@ export const fetchAllProducts = createAsyncThunk(
   "/products/fetchAllProducts",
   async () => {
     const result = await axios.get(
-      "http://localhost:5000/api/admin/products/get"
+      `${API_BASE}/api/admin/products/get`  // Using the dynamic backend URL
     );
 
     return result?.data;
@@ -38,7 +41,7 @@ export const editProduct = createAsyncThunk(
   "/products/editProduct",
   async ({ id, formData }) => {
     const result = await axios.put(
-      `http://localhost:5000/api/admin/products/edit/${id}`,
+      `${API_BASE}/api/admin/products/edit/${id}`,  // Using the dynamic backend URL
       formData,
       {
         headers: {
@@ -55,7 +58,7 @@ export const deleteProduct = createAsyncThunk(
   "/products/deleteProduct",
   async (id) => {
     const result = await axios.delete(
-      `http://localhost:5000/api/admin/products/delete/${id}`
+      `${API_BASE}/api/admin/products/delete/${id}`  // Using the dynamic backend URL
     );
 
     return result?.data;
