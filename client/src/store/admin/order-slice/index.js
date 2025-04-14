@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_BACKEND_URI;
+
 const initialState = {
   orderList: [],
   orderDetails: null,
@@ -10,7 +12,7 @@ export const getAllOrdersForAdmin = createAsyncThunk(
   "/order/getAllOrdersForAdmin",
   async () => {
     const response = await axios.get(
-      `http://localhost:5000/api/admin/orders/get`
+      `${BASE_URL}/api/admin/orders/get`
     );
 
     return response.data;
@@ -21,7 +23,7 @@ export const getOrderDetailsForAdmin = createAsyncThunk(
   "/order/getOrderDetailsForAdmin",
   async (id) => {
     const response = await axios.get(
-      `http://localhost:5000/api/admin/orders/details/${id}`
+      `${BASE_URL}/api/admin/orders/details/${id}`
     );
 
     return response.data;
@@ -32,10 +34,8 @@ export const updateOrderStatus = createAsyncThunk(
   "/order/updateOrderStatus",
   async ({ id, orderStatus }) => {
     const response = await axios.put(
-      `http://localhost:5000/api/admin/orders/update/${id}`,
-      {
-        orderStatus,
-      }
+      `${BASE_URL}/api/admin/orders/update/${id}`,
+      { orderStatus }
     );
 
     return response.data;
@@ -48,7 +48,6 @@ const adminOrderSlice = createSlice({
   reducers: {
     resetOrderDetails: (state) => {
       console.log("resetOrderDetails");
-
       state.orderDetails = null;
     },
   },
@@ -82,3 +81,4 @@ const adminOrderSlice = createSlice({
 export const { resetOrderDetails } = adminOrderSlice.actions;
 
 export default adminOrderSlice.reducer;
+
