@@ -25,10 +25,24 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // CORS configuration with environment variable
-app.use(cors({
-  origin: "*", // Allow all origins temporarily to debug
-  credentials: true
-}));
+const allowedOrigins = [
+  "https://itraders.vercel.app",
+  "https://itraders-git-main-ezra5566s-projects.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
 
 app.use(cookieParser());
 app.use(express.json());
