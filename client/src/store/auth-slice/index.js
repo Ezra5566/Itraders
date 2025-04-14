@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
@@ -9,58 +11,51 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   "/auth/register",
-
   async (formData) => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/register",
+      `${API_BASE}/api/auth/register`,
       formData,
       {
         withCredentials: true,
       }
     );
-
     return response.data;
   }
 );
 
 export const loginUser = createAsyncThunk(
   "/auth/login",
-
   async (formData) => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      `${API_BASE}/api/auth/login`,
       formData,
       {
         withCredentials: true,
       }
     );
-
     return response.data;
   }
 );
 
 export const logoutUser = createAsyncThunk(
   "/auth/logout",
-
   async () => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/logout",
+      `${API_BASE}/api/auth/logout`,
       {},
       {
         withCredentials: true,
       }
     );
-
     return response.data;
   }
 );
 
 export const checkAuth = createAsyncThunk(
   "/auth/checkauth",
-
   async () => {
     const response = await axios.get(
-      "http://localhost:5000/api/auth/check-auth",
+      `${API_BASE}/api/auth/check-auth`,
       {
         withCredentials: true,
         headers: {
@@ -69,7 +64,6 @@ export const checkAuth = createAsyncThunk(
         },
       }
     );
-
     return response.data;
   }
 );
@@ -133,3 +127,4 @@ const authSlice = createSlice({
 
 export const { setUser } = authSlice.actions;
 export default authSlice.reducer;
+
