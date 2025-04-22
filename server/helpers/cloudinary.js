@@ -25,6 +25,6 @@ module.exports = { upload, imageUploadUtil };
 
 // write the call code
 
-// const result = await cloudinary.uploader.upload(file, {
-//   resource_type: "auto",
-// });
+ const result = await cloudinary.uploader.upload(file, {
+   resource_type: "auto",
+ });
