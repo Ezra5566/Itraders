@@ -58,7 +58,7 @@ function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center space-x-2 text-gray-400">
                 <Phone className="h-4 w-4" />
-                <span>+254 700 000 000</span>
+                <span>+254 797787766</span>
               </li>
               <li className="flex items-center space-x-2 text-gray-400">
                 <Mail className="h-4 w-4" />
