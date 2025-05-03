@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -32,7 +32,7 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function (origin, callback) {
+    origin: function(origin, callback) {
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
