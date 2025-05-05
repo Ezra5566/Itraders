@@ -1,6 +1,7 @@
 import ProductFilter from "@/components/shopping-view/filter";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
+import LoginPromptDialog from "@/components/shopping-view/login-prompt-dialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -184,12 +185,12 @@ function ShoppingListing() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
           {productList && productList.length > 0
             ? productList.map((productItem) => (
-                <ShoppingProductTile
-                  handleGetProductDetails={handleGetProductDetails}
-                  product={productItem}
-                  handleAddtoCart={handleAddtoCart}
-                />
-              ))
+              <ShoppingProductTile
+                handleGetProductDetails={handleGetProductDetails}
+                product={productItem}
+                handleAddtoCart={handleAddtoCart}
+              />
+            ))
             : null}
         </div>
       </div>
