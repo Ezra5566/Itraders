@@ -49,6 +49,8 @@ function ShoppingListing() {
   const [sort, setSort] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
+  const [openLoginPrompt, setOpenLoginPrompt] = useState(false);
+
   const { toast } = useToast();
 
   const categorySearchParam = searchParams.get("category");
