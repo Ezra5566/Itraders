@@ -199,6 +199,11 @@ function ShoppingListing() {
         setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
       />
+
+       <LoginPromptDialog
+        open={openLoginPrompt}
+        setOpen={setOpenLoginPrompt}
+      />
     </div>
   );
 }
