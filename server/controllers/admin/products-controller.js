@@ -23,57 +23,50 @@ const handleImageUpload = async (req, res) => {
 //add a new product
 const addProduct = async (req, res) => {
   try {
-    const { imageUploadUtil } = require("../../helpers/cloudinary");
+    // Convert file to base64
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    const url = "data:" + req.file.mimetype + ";base64," + b64;
 
-    const addProduct = async (req, res) => {
-      try {
-        const b64 = Buffer.from(req.file.buffer).toString("base64");
-        const url = "data:" + req.file.mimetype + ";base64," + b64;
+    // Upload to Cloudinary
+    const result = await imageUploadUtil(url);
 
-        const result = await imageUploadUtil(url);
+    // Extract product details from request
+    const {
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+      averageReview,
+    } = req.body;
 
-        const {
-          title,
-          description,
-          category,
-          brand,
-          price,
-          salePrice,
-          totalStock,
-          averageReview,
-        } = req.body;
-
-        const newProduct = new Product({
-          image: result.secure_url,
-          title,
-          description,
-          category,
-          brand,
-          price,
-          salePrice,
-          totalStock,
-          averageReview,
-        });
+    // Create new product with proper image properties
+    const newProduct = new Product({
+      mainImage: result.secure_url,
+      images: [result.secure_url], // Store in both mainImage and images array
+      title,
+      description,
+      category,
+      brand,
+      price,
+      salePrice,
+      totalStock,
+      averageReview,
+    });
 
     await newProduct.save();
-    res.status(201).json({ success: true, data: newProduct });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ success: false, message: "Error occurred" });
-  }
-};
-
-
-    await newlyCreatedProduct.save();
     res.status(201).json({
       success: true,
-      data: newlyCreatedProduct,
+      data: newProduct,
     });
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log('Error in addProduct:', err);
     res.status(500).json({
       success: false,
-      message: "Error occured",
+      message: "Error occurred while creating product",
+      error: err.message
     });
   }
 };
