@@ -61,7 +61,7 @@ const createOrder = async (req, res) => {
         const newlyCreatedOrder = new Order({
           userId,
           cartId,
-          cartItems,
+          cartItems: formattedCartItems,
           addressInfo,
           orderStatus,
           paymentMethod,

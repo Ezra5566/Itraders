@@ -85,7 +85,7 @@ const fetchCartItems = async (req, res) => {
 
     const populateCartItems = validItems.map((item) => ({
       productId: item.productId._id,
-      image: item.productId.image,
+      image: item.productId.mainImage || (item.productId.images && item.productId.images[0]),
       title: item.productId.title,
       price: item.productId.price,
       salePrice: item.productId.salePrice,
