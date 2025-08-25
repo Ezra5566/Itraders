@@ -3,19 +3,52 @@ const Product = require("../../models/Product");
 
 const handleImageUpload = async (req, res) => {
   try {
+    console.log('handleImageUpload called');
+    console.log('File received:', req.file);
+    
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No file received",
+        details: "req.file is undefined"
+      });
+    }
+
+    if (!req.file.buffer) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid file format",
+        details: "req.file.buffer is undefined"
+      });Q
+    }
+
+    console.log('File buffer size:', req.file.buffer.length);
+    console.log('File mimetype:', req.file.mimetype);
+
     const b64 = Buffer.from(req.file.buffer).toString("base64");
     const url = "data:" + req.file.mimetype + ";base64," + b64;
+
+    console.log('Uploading to Cloudinary...');
     const result = await imageUploadUtil(url);
+    console.log('Cloudinary response:', result);
 
     res.json({
       success: true,
       result,
+      debug: {
+        fileReceived: true,
+        bufferPresent: true,
+        mimeType: req.file.mimetype,
+        bufferLength: req.file.buffer.length
+      }
     });
   } catch (error) {
-    console.log(error);
+    console.error('Error in handleImageUpload:', error);
     res.json({
       success: false,
-      message: "Error occured",
+      message: "Error uploading image",
+      error: error.message,
+      stack: error.stack
     });
   }
 };
@@ -23,12 +56,35 @@ const handleImageUpload = async (req, res) => {
 //add a new product
 const addProduct = async (req, res) => {
   try {
+    console.log('addProduct called');
+    console.log('File received:', req.file);
+    
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No file received",
+        details: "req.file is undefined"
+      });
+    }
+
+    if (!req.file.buffer) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid file format",
+        details: "req.file.buffer is undefined"
+      });
+    }
+
+    console.log('File buffer size:', req.file.buffer.length);
+    console.log('File mimetype:', req.file.mimetype);
+
     // Convert file to base64
     const b64 = Buffer.from(req.file.buffer).toString("base64");
     const url = "data:" + req.file.mimetype + ";base64," + b64;
 
-    // Upload to Cloudinary
+    console.log('Uploading to Cloudinary...');
     const result = await imageUploadUtil(url);
+    console.log('Cloudinary response:', result);
 
     // Extract product details from request
     const {
@@ -56,17 +112,28 @@ const addProduct = async (req, res) => {
       averageReview,
     });
 
+    console.log('Saving product...', newProduct);
     await newProduct.save();
+    console.log('Product saved:', newProduct);
+
     res.status(201).json({
       success: true,
       data: newProduct,
+      debug: {
+        fileReceived: true,
+        bufferPresent: true,
+        mimeType: req.file.mimetype,
+        bufferLength: req.file.buffer.length,
+        cloudinaryUrl: result.secure_url
+      }
     });
   } catch (err) {
-    console.log('Error in addProduct:', err);
+    console.error('Error in addProduct:', err);
     res.status(500).json({
       success: false,
       message: "Error occurred while creating product",
-      error: err.message
+      error: err.message,
+      stack: err.stack
     });
   }
 };
